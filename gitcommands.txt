@@ -1,7 +1,12 @@
+
+
+STEP 1) Goto the working directory and open git bash by right click and then use init git to create local git repository
 AzureAD+RITESHBHONDWE@DESKTOP-ESMMI9T MINGW64 /c/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo
 $ git init
 Initialized empty Git repository in C:/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo/.git/
 
+
+STEP 2) optional to check the status
 AzureAD+RITESHBHONDWE@DESKTOP-ESMMI9T MINGW64 /c/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo (master)
 $ git status
 On branch master
@@ -21,11 +26,43 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 
+
+STEP 3) use git add . to add all the files/folders in the current directory to the local repsoitory
 AzureAD+RITESHBHONDWE@DESKTOP-ESMMI9T MINGW64 /c/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo (master)
 $ git add .
 
+
+STEP 4) use git commit to commit the files in the local git
 AzureAD+RITESHBHONDWE@DESKTOP-ESMMI9T MINGW64 /c/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo (master)
 $ git commit -m "initial version with Customer CRUD with Postgress and Mongo"
 
+
+STEP 5) Connect to the remot Repository
 AzureAD+RITESHBHONDWE@DESKTOP-ESMMI9T MINGW64 /c/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo (master)
 $ git remote add origin "https://github.com/rb13github/CISProject.git"
+
+
+
+STEP 6) use push to push the files to remote respository in the branch "master" ,if branch is not there then it will create
+AzureAD+RITESHBHONDWE@DESKTOP-ESMMI9T MINGW64 /c/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo (master)
+$ git push -u origin master
+
+
+STEP 7) if any specific files needed then use add
+//Now we can create/update/delete files and then use following command
+//Add a file to local git if all the files the use add . (dot)
+AzureAD+RITESHBHONDWE@DESKTOP-ESMMI9T MINGW64 /c/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo (master)
+$ git add "gitcommands.txt"
+
+
+STEP 8) use commit
+//commit to local repo
+AzureAD+RITESHBHONDWE@DESKTOP-ESMMI9T MINGW64 /c/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo (master)
+$ git commit -m "added gitcommand.txt"
+
+//push to the remote oritin in branch "master" or first use "git remote add origin "https://github.com/rb13github/CISProject.git" to connect 
+
+
+STEP 9) use push
+AzureAD+RITESHBHONDWE@DESKTOP-ESMMI9T MINGW64 /c/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo (master)
+$ git push -u origin master
