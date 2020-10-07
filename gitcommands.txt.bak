@@ -66,8 +66,3 @@ $ git commit -m "added gitcommand.txt"
 STEP 9) use push
 AzureAD+RITESHBHONDWE@DESKTOP-ESMMI9T MINGW64 /c/ritesh/RiteshIBM/Cloud/RedHat/Operation Zenith/spring-cis-demo (master)
 $ git push -u origin master
-
-
-====
-
- git remote add origin "https://github.com/rb13github/microservices.git"

@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header">
+<!-- <div th:replace="fragments/header :: header">...</div> -->
+</head>
+
+<body>
+    
+     <!-- Navigator  -->
+<div th:replace="fragments/menu :: navigator">...</div>
+   <!-- Page Content -->
+  <div class="container mt-5">
+
+    <!-- Jumbotron Header -->
+    <header class="jumbotron my-4">
+      <h1 class="display-3">CIS - Customer Information Management </h1>
+      <p class="lead">Hello User</p>
+      
+    </header>
+    
+    <!-- Page Features -->
+    
+    <div align="center">
+  
+    <a href="/cisview/createcustomerview">Create New Customer</a>
+    <br/><br/>
+    
+    <!-- Jumbotron Header --><!-- Page Features -->
+    <div class="row">
+ 		<h3 class="card-title ml-3">Customer List</h3>
+      <div class="col-lg-12 col-md-12 mb-4">
+        <div class="card h-100">
+         
+          <div class="card-body">
+    <table class="table">
+       <thead class="thead-light">
+            <tr>
+                <th>Customer ID</th>
+                <th>Form ID</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Date Of Birth</th>
+                <th>Primary Email </th>
+                <th>Secondary Email</th>
+                <th>Primary Phone</th>
+                <th>Secondary Phone</th>
+              
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="customer: ${customerList}">
+                <td th:text="${customer.customerId}">Customer ID</td>
+                <td th:text="${customer.form_id}">Form ID</td>
+                <td th:text="${customer.firstName}">First Name</td>
+                <td th:text="${customer.middleName}">Middle Name</td>
+                <td th:text="${customer.lastName}">Last Name</td>
+                <td th:text="${customer.dob}">Dob </td>
+                <td th:text="${customer.primary_Email}">Primary Email </td>
+                <td th:text="${customer.secondary_Email}">Secondary Email</td>
+                <td th:text="${customer.primary_Phone}">Primary Phone</td>
+                <td th:text="${customer.secondary_Phone}">Secondary Phone</td>
+                <td>
+                
+                     <a th:href="@{'editcustomerview/' + ${customer.customerId}}">Edit</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{'deletecustomerview/' + ${customer.customerId}}">Delete</a>
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+</div>   
+
+</div>
+
+
+</div>
+          
+        </div>
+      </div>
+
+      
+      
+
+      
+
+    </div>
+    
+    
+    <!-- /.row -->
+ 
+  <!-- /.container -->
+ <!-- Footer -->
+<div th:replace="fragments/footer :: footer">...</div>
+
+  <!-- Bootstrap core JavaScript -->
+
+  <script type="text/javascript" th:src="@{/js/min.js}"></script>
+
+  
+</body>
+
+</html>

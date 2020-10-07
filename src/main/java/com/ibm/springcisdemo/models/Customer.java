@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -54,6 +55,8 @@ public class Customer implements Serializable{
 	private String title;
 	@Column(name = "category_Id") 
 	private String category_Id;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "dob") 
 	private LocalDate dob;
 	@Column(name = "status") 

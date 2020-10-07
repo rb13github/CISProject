@@ -23,84 +23,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ibm.springcisdemo.repository.AddressSQLRepository;
-import com.ibm.springcisdemo.repository.CustomerSQLRepository;
-
+import com.ibm.springcisdemo.service.CustomerService;
 
 import io.swagger.annotations.Api;
 
-import com.ibm.springcisdemo.models.Address;
 import com.ibm.springcisdemo.models.Customer;
 
 
 @RestController
-//@RequestMapping(value={"/","/cis/customer"})
 @RequestMapping(value={"/customer"})
 @CrossOrigin(origins="*")
 @Api(value="CIS", description="CIS Springboot SQL CRUD Application")
 public class CustomerController {
 
-	//private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
-	@GetMapping(value = "/hello")
-    public String greet() {
-    	return "Welcome to CIS!!!";
-    }
+@Autowired
+CustomerService customerService;
+
+//private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
+@GetMapping(value = "/hello")
+public String greet() {
+    return "Welcome to CIS!!!";
+}
 	
-@Autowired
-CustomerSQLRepository customerRepository;
-
-@Autowired
-AddressSQLRepository  addressSQLRepository;
-
-
 @PostMapping(value="/create",headers="Accept=application/json")
  public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-	
-	//System.out.println(" Request recieved Customer=" + customer);
-
-	
-	List<Address> newaddressList=new ArrayList<Address> ();
-	for(Address addr:customer.getAddresses())
-	{
-		
-		addr.setCustomer(customer);
-		newaddressList.add(addr);
-		System.out.println(" Request recieved Customer's Address=");
-		
-	}
-	customer.setAddresses(newaddressList);
-	
-//	System.out.println(" Address after adding customer="+customer.getAddresses());
-	
-	//Timestamp timestamp = new Timestamp(System.currentTimeMillis());  
-			int nextrandom=ThreadLocalRandom.current().nextInt();
-			LocalDate today= LocalDate.now();
-			String tokenid=today.toString()+"-"+String.valueOf(nextrandom);
-			
-			System.out.println(" Today's date="+today + " next Random Number"+nextrandom + " New tokenid No.="+tokenid);
-						
-			customer.setToken(tokenid);
-			
-			customer.setStart_Date(LocalDateTime.now());
-			
-			customer.setStatus("Initial");
-			
-			customer.setUserId(customer.getPrimary_Email());
-			
-	customerRepository.save(customer);
-	
-	for(Address addr:customer.getAddresses())
-	{
-		addr.setCustomer(customer);
-	addressSQLRepository.save(addr);
-	
-	}
+	System.out.println(" create Request recieved =" + customer);
+	customerService.save(customer,true);
 	return new ResponseEntity<Customer>(HttpStatus.OK);
 }
 
 @PutMapping(value="update/{custid}",headers="Accept=application/json")
 public ResponseEntity<Customer> updateCustomer(@RequestBody Customer changecustomer, @PathVariable String custid) {
-	Optional<Customer> customer = customerRepository.findById(Long.parseLong(custid));
+	Optional<Customer> customer = customerService.findById(Long.parseLong(custid));
 	
 	Customer customertemp= new Customer();
 	if( customer != null && customer.isPresent()) {
@@ -142,7 +96,7 @@ public ResponseEntity<Customer> updateCustomer(@RequestBody Customer changecusto
 		//customertemp.setCustomerKYCDoc(changecustomer.getCustomerKYCDoc());
 		
 		
-		customerRepository.save(customertemp);
+		customerService.save(customertemp,false);
 	    return new ResponseEntity<Customer>(HttpStatus.OK);
 	}
 	else
@@ -152,22 +106,20 @@ public ResponseEntity<Customer> updateCustomer(@RequestBody Customer changecusto
 	}
     
     
-    
 }
-
 
 @DeleteMapping(value="delete/{custid}",headers="Accept=application/json")
 public ResponseEntity<Customer> deleteCustomer(@PathVariable String custid) {
 	
-Optional<Customer> customer = customerRepository.findById(Long.parseLong(custid));
+Optional<Customer> customer = customerService.findById(Long.parseLong(custid));
 	
 	
 	if( customer != null && customer.isPresent()) {
-		customerRepository.deleteById(Long.parseLong(custid));
+		customerService.delete(Long.parseLong(custid));
 	    return new ResponseEntity<Customer>(HttpStatus.OK);
 	}
 	else{
-		System.out.println("custoemr Not found,No Delete");
+		System.out.println("customer Not found,No Delete");
 		return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
 	}
     
@@ -176,21 +128,26 @@ Optional<Customer> customer = customerRepository.findById(Long.parseLong(custid)
 }
 
 @GetMapping(value="/search",headers="Accept=application/json")
-public List<Customer> findAllUser() {
+public List<Customer> findAllCustomers() {
  // LOGGER.info("All cis-customer search");
 	
-	List<Customer> result = new ArrayList<Customer>();
-	Iterable<Customer> custIterable=customerRepository.findAll();
-    for (Customer cust:custIterable) {
-        result.add(cust);
-    }
-	return result;
+	return customerService.listAll();
 	}
 
 @GetMapping(value="/search/{custid}",headers="Accept=application/json")
-public Optional<Customer> findByid( @PathVariable String custid) {
+public ResponseEntity<Customer> findByid( @PathVariable String custid) {
  // LOGGER.info("All cis-customer search");
-	return customerRepository.findById(Long.parseLong(custid));
+Optional<Customer> customer = customerService.findById(Long.parseLong(custid));
+	
+	
+	if( customer != null && customer.isPresent()) {
+		
+		return new ResponseEntity<Customer>(customer.get(),HttpStatus.OK);
+	}
+	else{
+		System.out.println("custoemr Not found,No Delete");
+		return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
+	}
 	}
 
 
