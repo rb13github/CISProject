@@ -66,9 +66,9 @@
                 <td th:text="${customer.secondary_Phone}">Secondary Phone</td>
                 <td>
                 
-                     <a th:href="@{'editcustomerview/' + ${customer.customerId}}">Edit</a>
+                     <a th:href="@{'~/cisview/editcustomerview/' + ${customer.customerId}}">Edit</a>
                     &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{'deletecustomerview/' + ${customer.customerId}}">Delete</a>
+                    <a th:href="@{'~/cisview/deletecustomerview/' + ${customer.customerId}}">Delete</a>
                 </td>
                 
             </tr>

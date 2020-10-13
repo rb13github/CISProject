@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +37,63 @@ AddressSQLRepository  addressSQLRepository;
 	        return result;
 	    }
 	    
-	   
+	   public boolean update(Customer changecustomer)
+	   {
+		   
+		   Optional<Customer> customer = findById((changecustomer.getCustomerId()));
+			
+			Customer customertemp= new Customer();
+			if( customer != null && customer.isPresent()) {
+				customertemp.setCustomerId((changecustomer.getCustomerId()));
+				
+				customertemp.setTitle(changecustomer.getTitle());
+				customertemp.setFirstName(changecustomer.getFirstName());
+				customertemp.setLastName(changecustomer.getLastName());
+				customertemp.setMiddleName(changecustomer.getMiddleName());
+				customertemp.setDob(changecustomer.getDob());	
+				customertemp.setPrimary_Email(changecustomer.getPrimary_Email());
+				//As userid would be the primary email id there fore it will also updated.
+				customertemp.setUserId(changecustomer.getPrimary_Email());
+				customertemp.setSecondary_Email(changecustomer.getSecondary_Email());
+				
+				customertemp.setPrimary_Phone(changecustomer.getPrimary_Phone());
+				customertemp.setSecondary_Phone(changecustomer.getSecondary_Phone());
+				
+				//Timestamp timestamp = new Timestamp(System.currentTimeMillis());  
+				int nextrandom=ThreadLocalRandom.current().nextInt();
+				LocalDate today= LocalDate.now();
+				String token=today.toString()+"-"+String.valueOf(nextrandom);
+				
+				System.out.println(" Today's date="+today + " next Random Number"+nextrandom + " New token No.="+token);
+				
+				//form id will remains unchange
+				//customertemp.setForm_id(form_id);
+				
+				customertemp.setToken(token);
+				
+				//customertemp.setStart_Date(LocalDateTime.now());
+				
+				//customertemp.setStatus("Initial");
+				
+				customertemp.setStatus(changecustomer.getStatus());
+				customertemp.setCategory_Id(changecustomer.getCategory_Id());
+				
+				customertemp.setAddresses(changecustomer.getAddresses());
+				//customertemp.setCustomerKYCDoc(changecustomer.getCustomerKYCDoc());
+				
+				
+				save(customertemp,false);
+			    return true;
+			}
+			else
+			{
+				System.out.println("custoemr Not found,No Update");
+				return false;
+			}
+		    
+		    
+		   
+	   }
 	     
 	    public void save(Customer customer,boolean isnew) {
 	    	

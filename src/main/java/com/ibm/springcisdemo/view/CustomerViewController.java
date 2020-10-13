@@ -112,51 +112,91 @@ public class CustomerViewController {
 //	        System.out.println("in login success for user : "+name);
 //	        //return "redirect:/healthmgmt/Products/getProducts";
 	    	
+//	    	List<Customer> customerList = customerService.listAll();;
+//	        model.addAttribute("customerList", customerList);
+//	      //  System.out.println("customerList    :   "+customerList);
+	    	
+	    	
+
+	        return "redirect:/cisview/customerview";
+	       
+	        
+	    }
+	    
+	    @RequestMapping("/customerview")
+	    public String showCustomerViewPage(Model model) {
 	    	List<Customer> customerList = customerService.listAll();;
 	        model.addAttribute("customerList", customerList);
 	      //  System.out.println("customerList    :   "+customerList);
-	    	
-	    	
-	    	
 	        return "view_customers";
-	        
 	    }
 
 @RequestMapping("/createcustomerview")
-public String showNewPatientPage(Model model) {
+public String showNewCustomerPage(Model model) {
 	 Customer customer = new Customer();
 	 model.addAttribute("customer", customer);
 	   
 	        return "new_customer";
 }
+
+@RequestMapping("/deletecustomerview/{id}")
+public String deleteCustomer(Model model,@PathVariable(name = "id") String id) {
+	
+	
+  	 log.info("delete customer   :   "+id);
+  	 customerService.delete(Long.parseLong(id));
+	 return "redirect:/cisview/customerview";
+}
 	    
 @RequestMapping(value = "/create", method = RequestMethod.POST)
- public String savePatient(ModelMap model,@ModelAttribute("customer") Customer customer) {
+ public String createCustomer(ModelMap model,@ModelAttribute("customer") Customer customer) {
 	    	
    	 log.info("create customer   :   "+customer.getForm_id());
    	 customerService.save(customer,true);
-     List<Customer> customerList = customerService.listAll();;
-	  model.addAttribute("customerList", customerList);
-	  // System.out.println("customerList    :   "+customerList);
-	   return "view_customers";
+   	return "redirect:/cisview/customerview";
     }
-	    
-//	    @RequestMapping("/new")
-//	    public String showNewPatientPage(Model model) {
-//	    	Patient patient = new Patient();
-//	        model.addAttribute("patient", patient);
-//	         
-//	        return "new_patient";
-//	    }
-//	    
-//	    @RequestMapping(value = "/save", method = RequestMethod.POST)
-//	    public String savePatient(@ModelAttribute("patient") Patient patient) {
-//	    	
-//	    	 log.info("save patient   :   "+patient.getMobile());
-//	    	patientService.save(patient);
-//	         
-//	        return "redirect:/healthmgmt/patient/getPatients";
-//	    }
+@RequestMapping(value = "/update", method = RequestMethod.POST)
+public String updateCustomer(ModelMap model,@ModelAttribute("customer") Customer customer) {
+	    	
+  	 log.info("update  customer id  :   "+customer.getCustomerId());
+  	if( customerService.update(customer))
+  		log.info("update success customer id  :   "+customer.getCustomerId());
+  	else
+  		log.info("update  false customer id  :   "+customer.getCustomerId() + " NOT FOUND");
+  
+  	return "redirect:/cisview/customerview";
+   }
+
+
+@RequestMapping("/editcustomerview/{id}")
+public String updateCustomer(Model model,@PathVariable(name = "id") String id) {
+	
+	
+  	 log.info("edit customer   :   "+id);
+  	// customerService.delete(Long.parseLong(id));
+  	 
+  	Optional<Customer> customerOptional=customerService.findById(Long.parseLong(id));
+	
+  	if(customerOptional.isPresent())
+  	{
+  		log.info(" customer  found  :   "+id);
+  		Customer customer=customerOptional.get();
+  		log.info(" customer  found  id :   "+customer.getCustomerId());
+  		model.addAttribute("customer", customer);
+  		
+  		
+  	}
+  	else
+  	{
+  		log.info(" customer not found  :   "+id);
+  		Customer customer=customerOptional.orElse(new Customer());
+  		model.addAttribute("customer", customer);
+  		
+  	}
+  	
+     return "edit_customer";
+}
+
 //	    
 //	    @RequestMapping("/edit/{id}")
 //	    public ModelAndView showEditPatientPage(@PathVariable(name = "id") String id) {
@@ -171,10 +211,5 @@ public String showNewPatientPage(Model model) {
 //	        System.out.println("showEditPatientPage: In  the patient with id : "+patient.getId());
 //	        return mav;
 //	    }
-//	    
-//	    @RequestMapping("/delete/{id}")
-//	    public String deletePatient(@PathVariable(name = "id") int id) {
-//	    	patientService.deletePatientById(id);
-//	        return "redirect:/healthmgmt/patient/getPatients";       
-//	    }
+
 }
