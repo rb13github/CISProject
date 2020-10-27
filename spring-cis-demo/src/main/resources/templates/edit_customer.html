@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header">
+<!-- <div th:replace="fragments/header :: header">...</div> -->
+</head>
+
+<body>
+    
+     <!-- Navigator  -->
+<div th:replace="fragments/menu :: navigator">...</div>
+   <!-- Page Content -->
+  <div class="container mt-5">
+
+    <!-- Jumbotron Header -->
+    <header class="jumbotron my-4">
+      <h1 class="display-3">CIS Resources Management </h1>
+      <p class="lead">Hello User</p>
+      
+    </header>
+    
+    <!-- Page Features -->
+    
+     <div align="center">
+        <h1>Edit Customer</h1>
+        <br />
+      
+        <form action="#" th:action="@{'~/cisview/update/'}" th:object="${customer}"
+            method="post">
+ 
+            <table border="0" cellpadding="10">
+           
+                       
+            <tr>
+                    <td>Customer ID:</td>
+                    <td><input type="text" th:field="*{customerId}" readonly/></td>
+                </tr>
+            <tr>
+                    <td>Form No.:</td>
+                    <td><input type="text" th:field="*{form_id}" /></td>
+                </tr>
+                <tr>
+                    <td>Title Name(Mr/Mrs/Miss):</td>
+                    <td><input type="text" th:field="*{title}" /></td>
+                </tr>
+                <tr>
+                    <td>First Name:</td>
+                    <td><input type="text" th:field="*{firstName}" /></td>
+                </tr>
+                <tr>
+                    <td>Middle Name:</td>
+                    <td><input type="text" th:field="*{middleName}" /></td>
+                </tr>
+                <tr>
+                    <td>Last Name:</td>
+                    <td><input type="text" th:field="*{lastName}" /></td>
+                </tr>
+                <tr>
+                    <td>Date of Birth(yyyy-mm-dd):</td>
+                    <td><input type="date" th:field="*{dob}" /></td>
+                </tr>
+                <tr>
+                    <td>Category:</td>
+                    <td><input type="text" th:field="*{category_Id}" /></td>
+                </tr>
+                <tr>
+                    <td>Primary Email:</td>
+                    <td><input type="text" th:field="*{primary_Email}" /></td>
+                </tr>
+                <tr>
+                    <td>Secondary Email:</td>
+                    <td><input type="text" th:field="*{secondary_Email}" /></td>
+                    
+                </tr>   
+                <tr>
+                    <td>Primary Phone:</td>
+                    <td><input type="text" th:field="*{primary_Phone}" /></td>
+                </tr>
+                <tr>
+                    <td>Secondary Phone:</td>
+                    <td><input type="text" th:field="*{secondary_Phone}" /></td>
+                    
+                </tr>   
+                                        
+                <tr>
+                    <td colspan="2"><button type="submit">Update</button> </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    
+    <!-- /.row -->
+ 
+  <!-- /.container -->
+ <!-- Footer -->
+<div th:replace="fragments/footer :: footer">...</div>
+
+  <!-- Bootstrap core JavaScript -->
+
+  <script type="text/javascript" th:src="@{/js/min.js}"></script>
+
+  
+</body>
+
+</html>
