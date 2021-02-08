@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS CISUSER;
+CREATE TABLE CISUSER (id SERIAL PRIMARY KEY,	name VARCHAR ( 50 ) UNIQUE NOT NULL,password VARCHAR ( 100 ) NOT NULL);
+INSERT INTO CISUSER (id,name,password ) VALUES (1,'user1', '$2a$10$7bvyCx6OGn7rQnwgVnvbDOWagw5s3T.oslj5VYvyJWQcPvnBZ8uFa' ), (2,'user2', '$2a$10$E4FZjdsa8ohDmh6v6wwLlOd5dPbpPHhGCR7RrMdTXCHg2s2ZGcD4e' ),(3,'user3','$2a$10$6ULHPNijESBKLBgjogwWt.rnu4By3nWrnSThnWqwMunQkzuVCds3m');
