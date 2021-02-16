@@ -32,7 +32,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static java.lang.String.format;
 import org.slf4j.Logger;
-@EnableWebSecurity
+//@EnableWebSecurity
+
+//TODO: use when need to implement DB based authentication and JWT token
+//      Uncomment the @EnableWebSecurity of this and comment the same in other class
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepo userRepo;
